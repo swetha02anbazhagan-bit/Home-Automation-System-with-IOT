@@ -1,4 +1,4 @@
-# Home-Automation-System-with-IOT
+# Home-Automation-System-wit-IOT
 
 # AIM: 
   To make a Lamp at home (230 V AC) On / Off using ESP8266, IFTT Google Assistance and Blynk IoT mobile application.          
@@ -15,43 +15,189 @@ Arduino software
 Jumper Wires
 
 ## Theory: 
-Blynk is an IoT platform for iOS or Android smartphones that is used to control Arduino, Raspberry Pi and NodeMCU via the Internet. This application is used to create a graphical interface or human machine interface (HMI) by compiling and providing the appropriate address on the available widgets.In this experiment we use ESP8266 to control a 220-volt lamp from a web server. But you can also use the same procedure to control fans, lights, AC, or other electrical devices that you want to control remotely.
-Relay is an electromechanical device that is used as a switch between high current and low current devices. When the coil in the relay gets fully energized, the contact shifts from the normally open position to the normally closed position. Light bulbs usually operate on 120V or 220V AC power supply. We cannot interface these AC loads directly with the ESP8266 development board, or it will damage the board. We have to use a relay between the ESP8266 and the lamp. 
-Google Assistant and IFTTT work together to let you control services with voice commands. When you say a set phrase, Google Assistant processes it and sends it to IFTTT as a trigger. If the phrase matches an applet you've created, IFTTT performs the linked action—like turning on a light or sending a message. Everything runs in the cloud, making it easy to automate tasks with just your voice, as long as the command is correctly matched and all services are online.
-When we apply an active high signal to the signal pin of the relay module from any microcontroller like ESP8266, the relay contact moves from the normally open to the normally closed position. It makes the circuit complete, and the output load turns on.
+This experiment demonstrates a basic home automation system using an Arduino UNO that integrates sensors, user input, and output devices. An LDR is used to detect ambient light based on its property of varying resistance with light intensity. A TMP36 temperature sensor provides an analog voltage proportional to temperature, which the Arduino reads using its ADC. A push button allows manual user control, while a buzzer and LED act as output indicators. A 16×2 LCD display is interfaced in 4-bit mode to show real-time light and temperature readings. The Arduino continuously processes the sensor values and updates the display, while the button triggers LED and buzzer activation. The experiment highlights the fundamentals of sensing, analog-to-digital conversion, display interfacing, and automation control—representing a simplified model of smart-home technology.
 
 # PROCEDURE:
 
-•	Make the circuit connection as per the diagram. In the mobile, download and “Blynq IoT” application using Google play store and Install it. Create log in ID and Password.
-•	Connect the IN pin of the Relay module to D1 pin of NodeMCU (ESP8266).
-•	Connect VCC of the Relay of NodeMCU. Connect GND of the Relay to GND of NodeMCU. 
-•	Connect your AC bulb to the Relay’s switch terminal securely.
-•	Install ESP8266 board in Arduino IDE via Board Manager. Select board: NodeMCU 1.0 (ESP-12E Module).
-•	Include necessary libraries: ESP8266WiFi and ESP8266WebServer.
-•	In the code, configure Wi-Fi SSID and Password.
-•	Set up a web server that responds to /on and /off URLs.
-•	Upload the code to the ESP8266 using a micro USB cable.
-•	Get Local IP Address After uploading, open Serial Monitor to find the local IP address of ESP8266.
-•	Create Applets on IFTTT - For "This", select Google Assistant → "Say a simple phrase". Command: "Turn on the light". For "That", choose Webhooks → "Make a web request". 
-•	Repeat to create another applet for command with URL.
-•	Test the System - Google Assistant triggers IFTTT → sends Webhook to ESP8266 → turns ON the relay (light).
-•	Say "Turn off the ligh to switch it OFF, Say "Turn on the light" to switch it ON.
+# ✅ **PROCEDURE FOR HOME AUTOMATION CIRCUIT IN TINKERCAD**
+
+## **1. Components Required**
+
+* Arduino UNO
+* Breadboard
+* LCD 16×2 (with pins, not I2C)
+* Potentiometer (for LCD contrast)
+* LDR (Light Dependent Resistor)
+* Temperature Sensor (TMP36)
+* Buzzer
+* Push Button
+* LED
+* Jumper wires
+* 220Ω resistors
+
+---
+
+# ✅ **2. Circuit Assembly Steps**
+
+## **A. Set Up the LCD (16×2)**
+
+1. Place the **LCD** on the breadboard.
+2. Make the following connections:
+
+| LCD Pin  | Connect To                                     |
+| -------- | ---------------------------------------------- |
+| VSS      | GND                                            |
+| VDD      | 5V                                             |
+| VO       | Middle pin of potentiometer (contrast control) |
+| RS       | Arduino Digital Pin 7                          |
+| RW       | GND                                            |
+| E        | Arduino Digital Pin 8                          |
+| D4       | Arduino Digital Pin 9                          |
+| D5       | Arduino Digital Pin 10                         |
+| D6       | Arduino Digital Pin 11                         |
+| D7       | Arduino Digital Pin 12                         |
+| A (LED+) | 5V through 220Ω resistor                       |
+| K (LED–) | GND                                            |
+
+3. Connect potentiometer:
+
+   * Left pin → 5V
+   * Right pin → GND
+   * Middle pin → LCD VO
+
+---
+
+## **B. Connect the LDR (Light Sensor)**
+
+1. Place the **LDR** on the breadboard.
+2. One leg → **5V**
+3. Other leg → **A0**
+4. Also connect a **10k resistor** from that leg to **GND**
+   (This forms a voltage divider.)
+
+---
+
+## **C. Connect Temperature Sensor (TMP36)**
+
+1. Flat side facing you:
+
+   * Left pin → **5V**
+   * Middle pin → **A1**
+   * Right pin → **GND**
+
+---
+
+## **D. Connect the Button**
+
+1. Place push button across the breadboard.
+2. One side → **Digital Pin 2**
+3. Same side → 5V
+4. Other side → 10k resistor → GND
+   (This acts as a pull-down resistor.)
+
+---
+
+## **E. Connect the Buzzer**
+
+1. Positive terminal → **Digital Pin 6**
+2. Negative terminal → GND
+
+---
+
+## **F. Connect the LED**
+
+1. LED anode → Digital Pin 3
+2. LED cathode → 220Ω resistor → GND
+
+---
+
+## **G. Power/Ground Management**
+
+* Connect Arduino **5V** → Breadboard + rail
+* Connect Arduino **GND** → Breadboard – rail
+* Make sure all sensors share the same ground.
+
+---
+
+
+
+
+
+# ✅ **4. Working Principle**
+
+* **LDR** detects light level → Displayed on LCD
+* **TMP36** measures temperature → Displayed on LCD
+* **Button** acts as a manual trigger → LED + buzzer ON
+* **LCD** shows real-time sensor readings
+
+---
+
+
 
 # CIRCUIT DIAGRAM:
 
-<img width="663" height="400" alt="image" src="https://github.com/user-attachments/assets/bfebc70d-25b4-4b4a-a7e1-2a02c09bf423" />
+<img width="1117" height="669" alt="image" src="https://github.com/user-attachments/assets/8bc079d3-34ec-4773-8246-3fdffc3cd51e" />
+
 
 
  
 # PROGRAM:
+Use this basic template:
 
+```cpp
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
+
+const int ldrPin = A0;
+const int tempPin = A1;
+const int buttonPin = 2;
+const int ledPin = 3;
+const int buzzerPin = 6;
+
+void setup() {
+  pinMode(buttonPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+
+  lcd.begin(16, 2);
+}
+
+void loop() {
+  int lightValue = analogRead(ldrPin);
+  int tempValue = analogRead(tempPin);
+
+  float voltage = tempValue * (5.0 / 1023.0);
+  float temperatureC = (voltage - 0.5) * 100;
+
+  lcd.setCursor(0,0);
+  lcd.print("Light:");
+  lcd.print(lightValue);
+
+  lcd.setCursor(0,1);
+  lcd.print("Temp:");
+  lcd.print(temperatureC);
+
+  // Button-controlled LED + buzzer
+  if (digitalRead(buttonPin) == HIGH) {
+    digitalWrite(ledPin, HIGH);
+    tone(buzzerPin, 1000);
+  } else {
+    digitalWrite(ledPin, LOW);
+    noTone(buzzerPin);
+  }
+
+  delay(500);
+}
+```
+
+---
 
  
 # Output:
 
+<img width="1485" height="783" alt="image" src="https://github.com/user-attachments/assets/54ee61d5-4647-43bf-ae56-557e1ef92ba0" />
 
 
 ## Result:
-
-
-
+The home automation circuit was successfully simulated in Tinkercad. The LDR and temperature sensor provided real-time light and temperature readings, which were correctly displayed on the LCD. The push button activated the LED and buzzer as expected. All components functioned properly, demonstrating a working prototype of a basic home automation system.
